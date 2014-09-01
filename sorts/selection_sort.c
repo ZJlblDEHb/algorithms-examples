@@ -1,5 +1,5 @@
 /*
- * main.c
+ * selection_sort.c
  * 
  * Copyright 2014 asergeev <asergeev@asergeev-xub>
  * 
@@ -22,43 +22,30 @@
  */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-
-void print_array(int array_size, int *input_array) {
-	int i = 0;
-	printf("[");
-	for (i = 0; i < array_size; ++i) {
-		if (i != 0) {
-			printf(", ");
-		}
-		printf("%d", input_array[i]);
-	}
-	printf("]\n");
-}
-
-void fill_array(int array_size, int *input_array) {
-	int i = 0;
-	// fill array with random numbers
-	for (i = 0; i < array_size; ++i) {
-		input_array[i] = rand() % 20;
-	}
-}
+#include "tools.h"
 
 void sort_array(int array_size, int *input_array) {
-	int i;
-	int j;
-	int key;
+	/* 
+	 * Consider sorting n numbers stored in array A by first finding the smallest element
+	 * of A and exchanging it with the element in A[1]. Then find the second smallest
+	 * element of A, and exchange it with A[2]. Continue in this manner for the first n 1
+	 * elements of A. Write pseudocode for this algorithm, which is known as selection
+	 * sort.
+	 */
+	int i, j, key, temp;
 	
-	for (j = 2; j < array_size; ++j) {
-		key = input_array[j];
+	for (j = 0; j < array_size - 1; ++j) {
+		key = j;
 		
-		i = j - 1;
-		while ((i >= 0) & (input_array[i] > key)) {
-			input_array[i+1] = input_array[i];
-			i = i - 1;
+		for (i = j + 1; i < array_size; ++i) {
+			if (input_array[key] > input_array[i]) {
+				key = i;
+			}
 		}
-		input_array[i+1] = key;
+		
+		temp = input_array[j];
+		input_array[j] = input_array[key];
+		input_array[key] = temp;
 	}
 }
 
