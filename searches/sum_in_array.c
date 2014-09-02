@@ -1,5 +1,5 @@
 /*
- * linear_search.c
+ * sum_in_array.c
  * 
  * Copyright 2014 asergeev <asergeev@asergeev-xub>
  * 
@@ -21,41 +21,16 @@
  * 
  */
 
+/* 
+ * Describe a O(n lg n) time algorithm that, given a set S of n integers and another
+ * integer x, determines whether or not there exist two elements in S whose sum is
+ * exactly x. 
+ */
 
 #include <stdio.h>
-#include "../lib/tools.h"
-
-int search(int *input_array, int array_size, int element) {
-	int i;
-	for (i = 0; i < array_size; ++i) {
-		if (element == input_array[i]) {
-			return i;
-		}
-	}
-	return -1;
-}
 
 int main()
 {
-	int *input_array, result;
-	int array_size = 10;
-	int element = 17;
-	input_array = malloc(array_size * sizeof(int));
-	
-	fill_array(array_size, input_array);
-	
-	print_array(array_size, input_array);
-	
-	result = search(input_array, array_size, element);
-	
-	if (result != -1) {
-		printf("element found at position %d\n", result);
-	}
-	else {
-		printf("element not found!\n");
-	}
-	
-	free(input_array);
 	
 	return 0;
 }

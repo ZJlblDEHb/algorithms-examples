@@ -1,5 +1,5 @@
 /*
- * linear_search.c
+ * bubble_sort.c
  * 
  * Copyright 2014 asergeev <asergeev@asergeev-xub>
  * 
@@ -22,38 +22,36 @@
  */
 
 
-#include <stdio.h>
+#include <limits.h>
 #include "../lib/tools.h"
 
-int search(int *input_array, int array_size, int element) {
-	int i;
-	for (i = 0; i < array_size; ++i) {
-		if (element == input_array[i]) {
-			return i;
+void bubble_sort(int array_size, int *input_array) {
+	int i, j, temp;
+	
+	for (i = 0; i < array_size - 1; ++i) {
+		for (j = array_size - 1; j > i; --j) {
+			if (input_array[j] < input_array[j - 1]) {
+				temp = input_array[j];
+				input_array[j] = input_array[j - 1];
+				input_array[j - 1] = temp;
+			}
 		}
 	}
-	return -1;
 }
 
 int main()
 {
-	int *input_array, result;
-	int array_size = 10;
-	int element = 17;
+	int *input_array;
+	int array_size = 20;
 	input_array = malloc(array_size * sizeof(int));
 	
 	fill_array(array_size, input_array);
 	
 	print_array(array_size, input_array);
 	
-	result = search(input_array, array_size, element);
+	bubble_sort(array_size, input_array);
 	
-	if (result != -1) {
-		printf("element found at position %d\n", result);
-	}
-	else {
-		printf("element not found!\n");
-	}
+	print_array(array_size, input_array);
 	
 	free(input_array);
 	

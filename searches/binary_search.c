@@ -53,7 +53,7 @@ int search(int *input_array, int array_size, int element) {
 	return binary_search(input_array, 0, array_size - 1, element);
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	int *input_array, result;
 	int array_size = 20;
