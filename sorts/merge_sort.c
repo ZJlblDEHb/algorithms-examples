@@ -22,45 +22,58 @@
  */
 
 
+#include <limits.h>
 #include "tools.h"
 
-void merge(int input_array, int start, int mid, int end) {
-	int first_size, second_size, i, j, *first_half, *second_half;
+void merge(int *input_array, int start, int mid, int end) {
+	int first_size, second_size, i, j, k, *first_half, *second_half;
 	first_size = mid - start + 1;
 	second_size = end - mid;
 	
-	first_half = malloc(first_size * sizeof(int));
-	second_half = malloc(second_size * sizeof(int));
+	first_half = malloc((first_size + 1) * sizeof(int));
+	second_half = malloc((second_size + 1) * sizeof(int));
 	
 	for (i = 0; i < first_size; ++i) {
-		first_half = input_array[start + i - 1];
+		first_half[i] = input_array[start + i];
 	}
 	
-	for (i = 0; i < second_size; ++i) {
-		second_half = input_array[mid + i];
-	}
+	for (j = 0; j < second_size; ++j) {
+		second_half[j] = input_array[mid + j + 1];
+	}	
+	
+	first_half[first_size] = INT_MAX;
+	second_half[second_size] = INT_MAX;	
 	
 	i = 0;
 	j = 0;
+	for (k = start; k <= end; ++k) {
+		if (first_half[i] <= second_half[j]) {
+			input_array[k] = first_half[i];
+			i += 1;
+		}
+		else {
+			input_array[k] = second_half[j];
+			j += 1;
+		}
+	}
 	
+	free(first_half);
+	free(second_half);
+}
+
+void merge_sort(int *input_array, int start, int end) {
+	int mid;
+	
+	if (start < end) {
+		mid = (start + end) / 2;		
+		merge_sort(input_array, start, mid);
+		merge_sort(input_array, mid + 1, end);
+		merge(input_array, start, mid, end);
+	}
 }
 
 void sort_array(int array_size, int *input_array) {
-	int i, j, key, temp;
-	
-	for (j = 0; j < array_size - 1; ++j) {
-		key = j;
-		
-		for (i = j + 1; i < array_size; ++i) {
-			if (input_array[key] > input_array[i]) {
-				key = i;
-			}
-		}
-		
-		temp = input_array[j];
-		input_array[j] = input_array[key];
-		input_array[key] = temp;
-	}
+	merge_sort(input_array, 0, array_size - 1);
 }
 
 int main()
