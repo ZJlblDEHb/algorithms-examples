@@ -22,7 +22,7 @@
  */
 
 
-#include "tools.h"
+#include "../lib/tools.h"
 
 void sort_array(int array_size, int *input_array) {
 	/* 

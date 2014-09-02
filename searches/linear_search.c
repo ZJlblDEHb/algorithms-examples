@@ -1,5 +1,5 @@
 /*
- * tools.h
+ * linear_search.c
  * 
  * Copyright 2014 asergeev <asergeev@asergeev-xub>
  * 
@@ -23,29 +23,40 @@
 
 
 #include <stdio.h>
-#include <stdlib.h>
+#include "../lib/tools.h"
 
-#ifndef tools
-#define tools
-
-void print_array(int array_size, int *input_array) {
-	int i = 0;
-	printf("[");
+int search(int *input_array, int array_size, int element) {
+	int i;
 	for (i = 0; i < array_size; ++i) {
-		if (i != 0) {
-			printf(", ");
+		if (element == input_array[i]) {
+			return i;
 		}
-		printf("%d", input_array[i]);
 	}
-	printf("]\n");
+	return -1;
 }
 
-void fill_array(int array_size, int *input_array) {
-	int i = 0;
-	// fill array with random numbers
-	for (i = 0; i < array_size; ++i) {
-		input_array[i] = rand() % 20;
+int main(int argc, char **argv)
+{
+	int *input_array, result;
+	int array_size = 10;
+	int element = 17;
+	input_array = malloc(array_size * sizeof(int));
+	
+	fill_array(array_size, input_array);
+	
+	print_array(array_size, input_array);
+	
+	result = search(input_array, array_size, element);
+	
+	if (result != -1) {
+		printf("element found at position %d\n", result);
 	}
+	else {
+		printf("element not found!\n");
+	}
+	
+	free(input_array);
+	
+	return 0;
 }
 
-#endif

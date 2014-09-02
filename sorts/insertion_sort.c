@@ -22,18 +22,33 @@
  */
 
 
-#include "tools.h"
+#include "../lib/tools.h"
 
 void sort_array(int array_size, int *input_array) {
-	int i;
-	int j;
-	int key;
+	int i, j, key;
 	
 	for (j = 1; j < array_size; ++j) {
 		key = input_array[j];
 		
 		i = j - 1;
 		while ((i >= 0) & (input_array[i] > key)) {
+			input_array[i+1] = input_array[i];
+			i = i - 1;
+		}
+		input_array[i+1] = key;
+	}
+}
+
+void sort_array_recursive(int array_size, int *input_array) {
+	int i, key;
+	
+	if (array_size > 1) {
+		key = input_array[array_size - 1];
+		
+		sort_array_recursive(array_size - 1, input_array);
+		
+		i = array_size - 2;
+		while (i >= 0 & input_array[i] > key) {
 			input_array[i+1] = input_array[i];
 			i = i - 1;
 		}
@@ -51,7 +66,7 @@ int main()
 	
 	print_array(array_size, input_array);
 	
-	sort_array(array_size, input_array);
+	sort_array_recursive(array_size, input_array);
 	
 	print_array(array_size, input_array);
 	

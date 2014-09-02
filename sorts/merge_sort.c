@@ -23,7 +23,7 @@
 
 
 #include <limits.h>
-#include "tools.h"
+#include "../lib/tools.h"
 
 void merge(int *input_array, int start, int mid, int end) {
 	int first_size, second_size, i, j, k, *first_half, *second_half;
@@ -61,6 +61,39 @@ void merge(int *input_array, int start, int mid, int end) {
 	free(second_half);
 }
 
+void merge_without_sentinel(int *input_array, int start, int mid, int end) {
+	int first_size, second_size, i, j, k, *first_half, *second_half;
+	first_size = mid - start + 1;
+	second_size = end - mid;
+	
+	first_half = malloc((first_size) * sizeof(int));
+	second_half = malloc((second_size) * sizeof(int));
+	
+	for (i = 0; i < first_size; ++i) {
+		first_half[i] = input_array[start + i];
+	}
+	
+	for (j = 0; j < second_size; ++j) {
+		second_half[j] = input_array[mid + j + 1];
+	}	
+	
+	i = 0;
+	j = 0;
+	for (k = start; k <= end; ++k) {
+		if ((j == second_size | first_half[i] <= second_half[j]) & i != first_size) {
+			input_array[k] = first_half[i];
+			i += 1;
+		}
+		else {
+			input_array[k] = second_half[j];
+			j += 1;
+		}
+	}
+	
+	free(first_half);
+	free(second_half);
+}
+
 void merge_sort(int *input_array, int start, int end) {
 	int mid;
 	
@@ -68,7 +101,7 @@ void merge_sort(int *input_array, int start, int end) {
 		mid = (start + end) / 2;		
 		merge_sort(input_array, start, mid);
 		merge_sort(input_array, mid + 1, end);
-		merge(input_array, start, mid, end);
+		merge_without_sentinel(input_array, start, mid, end);
 	}
 }
 
